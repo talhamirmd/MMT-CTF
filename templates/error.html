@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} - {{ ctf_name }}{% endblock %}
+{% block content %}
+<div class="card center">
+  <h1 class="big-code">{{ code }}</h1>
+  <p>{{ message }}</p>
+  <a class="btn" href="{{ url_for('index') }}">Back home</a>
+</div>
+{% endblock %}

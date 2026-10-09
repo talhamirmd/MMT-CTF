@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card center">
+  <h1>Not started yet</h1>
+  <p class="lead">The CTF starts at <b>{{ ctf_start | dt }}</b>.</p>
+  <p class="countdown" id="countdown" data-start="{{ ctf_start }}"></p>
+  <p class="muted">Come back then.</p>
+</div>
+<script>
+  (function () {
+    var el = document.getElementById("countdown"), start = parseFloat(el.dataset.start) * 1000;
+    function tick() {
+      var s = Math.max(0, Math.floor((start - Date.now()) / 1000));
+      if (s === 0) { location.reload(); return; }
+      var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+      el.textContent = d + "d " + h + "h " + m + "m " + (s % 60) + "s";
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ chal.name }} - {{ ctf_name }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('challenges') }}">Back to challenges</a></p>
+
+{% if mission %}
+  <nav class="stepper" aria-label="{{ mission.name }} phases">
+    <span class="stepper-title">{{ mission.name }}</span>
+    {% for p in mission.phases %}
+      {% set state = "done" if p.id in player_solves else ("locked" if p.requires and p.requires not in player_solves and not admin else "open") %}
+      <a class="step step-{{ state }}{% if p.id == chal.id %} current{% endif %}" href="{{ url_for('challenge', cid=p.id) }}">
+        Phase {{ p.phase }}{% if state == "done" %} &#10003;{% endif %}
+      </a>
+    {% endfor %}
+  </nav>
+{% endif %}
+
+<article class="card">
+    <div class="chal-meta">{{ chal.category }}, {{ chal.difficulty|lower }}, {{ chal.points }} points, solved by {{ solve_count }}</div>
+    <h1>{% if mission %}<span class="muted">{{ chal.phase }}.</span> {% endif %}{{ chal.name }} {% if solved %}<span class="check">&#10003;</span>{% endif %}</h1>
+
+  {% if locked %}
+    <div class="locked-box">
+      <p>Locked. You need to solve <a href="{{ url_for('challenge', cid=chal.requires) }}">phase {{ chal.phase - 1 }}</a> first.</p>
+    </div>
+  {% else %}
+    <div class="desc">{{ chal.description | safe }}</div>
+
+    {% if chal.link %}
+      <p><a class="btn" href="{{ chal.link }}" target="_blank" rel="noopener">Open challenge</a></p>
+    {% endif %}
+
+    {% if chal.hints %}
+      <h3>Hints</h3>
+      {% for h in chal.hints %}
+        <details class="hint"><summary>Hint {{ loop.index }}</summary><p>{{ h | safe }}</p></details>
+      {% endfor %}
+    {% endif %}
+
+    <p class="guide-note">
+      {% if guide[0] == "open" %}
+        <a href="{{ url_for('guide', cid=chal.id) }}">Read the step by step guide for this phase</a>
+      {% else %}
+        Step by step guide: unlocks in {{ (guide[1] / 60) | round(0, 'ceil') | int }} min. Try it yourself first!
+      {% endif %}
+    </p>
+
+    {% if solved %}
+      <div class="flash flash-success">Solved.</div>
+      {% if chal.next %}
+        <p><a class="btn" href="{{ url_for('challenge', cid=chal.next) }}">Go to phase {{ chal.phase + 1 }}</a></p>
+      {% elif mission %}
+        <p>That was the last phase of {{ mission.name }}.</p>
+      {% endif %}
+    {% elif ctf_status != "ended" or admin %}
+      <form method="post" class="submit-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input name="flag" placeholder="flag{...}" autocomplete="off" required maxlength="200">
+        <button class="btn">Submit</button>
+      </form>
+    {% endif %}
+  {% endif %}
+</article>
+{% endblock %}

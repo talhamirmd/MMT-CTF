@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Guide - {{ ctf_name }}{% endblock %}
+{% block content %}
+<h1>Guide</h1>
+<p class="lead">Step by step walkthroughs with screenshots for every phase, plus what each one teaches you.
+  A guide unlocks after you've spent {{ delay_min }} minutes on that phase, or as soon as you solve it.</p>
+
+<div class="mission-grid">
+  {% for m, phases in missions %}
+    <div class="mission-card cat-{{ m.category|lower }}">
+      <div class="mission-head">
+        <span class="mission-cat">{{ m.category }}</span>
+        <span class="mission-diff">{{ m.difficulty }}</span>
+      </div>
+      <h3>{{ m.name }}</h3>
+      <ol class="phase-list">
+        {% for p, (state, left) in phases %}
+          <li class="phase phase-{{ 'open' if state == 'open' else 'locked' }}">
+            <a href="{{ url_for('guide', cid=p.id) if state == 'open' else url_for('challenge', cid=p.id) }}">
+              <span class="phase-icon">{{ p.phase }}</span>
+              <span class="phase-name">{{ p.name }}</span>
+              <span class="phase-pts">
+                {% if state == "open" %}read guide
+                {% elif state == "waiting" %}in {{ (left / 60) | round(0, 'ceil') | int }} min
+                {% elif state == "not_started" %}not started
+                {% else %}locked{% endif %}
+              </span>
+            </a>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

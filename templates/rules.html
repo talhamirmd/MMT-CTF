@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Rules - {{ ctf_name }}{% endblock %}
+{% block content %}
+<h1>Rules</h1>
+<div class="card prose">
+  <ol>
+    <li>Flags look like <code>{{ flag_format }}</code> and are case sensitive. Submit the whole thing.</li>
+    <li>Only attack the challenge pages (the ones under <code>/chal/</code>), not the site itself.</li>
+    <li>Don't brute force the flag form. It's rate limited anyway.</li>
+    <li>No DoS, no scanners, and leave other players alone.</li>
+    <li>Don't post flags or solutions while the CTF is running.</li>
+    <li>If something looks broken, tell an organiser.</li>
+  </ol>
+  <h2>Scoring</h2>
+  <p>Every phase is worth a fixed number of points. You have to solve the phases of a mission in order.</p>
+</div>
+{% endblock %}

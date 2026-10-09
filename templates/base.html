@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>{% block title %}{{ ctf_name }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="{{ url_for('index') }}">{{ ctf_name }}</a>
+    <nav>
+      <a href="{{ url_for('challenges') }}">Challenges</a>
+      <a href="{{ url_for('guide_index') }}">Guide</a>
+      <a href="{{ url_for('scoreboard') }}">Scoreboard</a>
+      <a href="{{ url_for('rules') }}">Rules</a>
+      {% if admin %}
+        <a href="{{ url_for('admin') }}" class="admin-link">Admin</a>
+        <form method="post" action="{{ url_for('admin_logout') }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="link-btn">Admin logout</button>
+        </form>
+      {% endif %}
+      <span class="nav-sep"></span>
+      {% if user %}
+        <span class="nav-user">{{ user.username }}</span>
+        <form method="post" action="{{ url_for('logout') }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="link-btn">Log out</button>
+        </form>
+      {% else %}
+        <a href="{{ url_for('login') }}">Log in</a>
+        <a href="{{ url_for('register') }}" class="nav-cta">Sign up</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="flash flash-{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    {{ ctf_name }} - flags look like <code>{{ flag_format }}</code>
+  </footer>
+</body>
+</html>

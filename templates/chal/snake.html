@@ -1,0 +1,41 @@
+{% extends "chal/base.html" %}
+{% block title %}Snake Lab - Stage {{ stage }}{% endblock %}
+{% block head %}
+<style>
+  body { background: #0f1a14; color: #cfe8d6; font-family: Consolas, "Courier New", monospace; }
+  .lab { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .logo { font-size: 1.6rem; color: #ffd43b; }
+  .logo span { color: #4b8bbe; }
+  .stages { display: flex; gap: 8px; margin: 24px 0; flex-wrap: wrap; }
+  .stages a { flex: 1; min-width: 160px; padding: 10px 12px; border: 1px solid #2c4a37; border-radius: 6px; color: #8fb79b; text-decoration: none; font-size: .9rem; }
+  .stages a.on { border-color: #ffd43b; color: #ffd43b; background: rgba(255, 212, 59, .06); }
+  .panel { border: 1px solid #2c4a37; background: #0b130e; border-radius: 8px; padding: 24px; }
+  .panel h1 { font-family: inherit; font-size: 1.4rem; color: #fff; }
+  .dl { display: inline-block; background: #ffd43b; color: #0f1a14; padding: 10px 18px; border-radius: 4px; text-decoration: none; font-weight: bold; margin: 8px 0 18px; }
+  pre.run { background: #000; color: #9cdcae; padding: 12px 14px; border-radius: 6px; border: 1px solid #2c4a37; }
+  .muted { color: #6f8f78; }
+</style>
+{% endblock %}
+{% block body %}
+<div class="lab">
+  <div class="logo">Snake<span>Lab</span></div>
+  <div class="stages">
+    {% for n, s in stages.items() %}
+      <a href="/chal/m/snake/{{ n }}" class="{{ 'on' if n == stage }}">Stage {{ n }}: {{ s[0] }}</a>
+    {% endfor %}
+  </div>
+  <div class="panel">
+    <h1>Stage {{ stage }}: {{ name }}</h1>
+    <p>{{ blurb }}</p>
+    <a class="dl" href="/static/files/{{ filename }}" download>Download {{ filename }}</a>
+    {% if filename.endswith(".py") %}
+      <p>Run it from a terminal in the folder you saved it to:</p>
+      <pre class="run">$ python {{ filename }}</pre>
+    {% else %}
+      <p>This one is just data. You have to write the script yourself.</p>
+      <pre class="run">$ python my_solver.py</pre>
+    {% endif %}
+    <p class="muted">Get Python 3 from python.org if you don't have it.</p>
+  </div>
+</div>
+{% endblock %}

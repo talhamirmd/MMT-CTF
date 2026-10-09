@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Guide: {{ chal.name }} - {{ ctf_name }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('guide_index') }}">All guides</a> &nbsp;/&nbsp; <a href="{{ url_for('challenge', cid=chal.id) }}">Back to the phase</a></p>
+
+<article class="card guide">
+  <div class="chal-meta">{{ mission.name }}, phase {{ chal.phase }}</div>
+  <h1>{{ chal.name }}</h1>
+
+  {% if state != "open" %}
+    <p class="locked-box">
+      {% if state == "waiting" %}
+        This guide unlocks in {{ (left / 60) | round(0, 'ceil') | int }} min. Keep trying in the meantime, the hints might be enough.
+      {% elif state == "not_started" %}
+        Open <a href="{{ url_for('challenge', cid=chal.id) }}">the phase</a> first. The guide unlocks {{ delay_min }} minutes after that.
+      {% else %}
+        You need to get to this phase first.
+      {% endif %}
+    </p>
+  {% elif guide %}
+    <h2>What you'll learn</h2>
+    <ul class="learn">
+      {% for item in guide.learn %}<li>{{ item | safe }}</li>{% endfor %}
+    </ul>
+
+    <h2>Steps</h2>
+    <ol class="guide-steps">
+      {% for text, img in guide.steps %}
+        <li>
+          <p>{{ text | safe }}</p>
+          {% if img %}
+            <a href="{{ url_for('static', filename='guide/' ~ img) }}" target="_blank" rel="noopener">
+              <img src="{{ url_for('static', filename='guide/' ~ img) }}" alt="Screenshot for step {{ loop.index }}" loading="lazy">
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+
+    <div class="guide-flag">
+      <p>The flag for this phase:</p>
+      <code>{{ chal.flag }}</code>
+      <p class="muted small">The screenshots show <code>flag{...}</code> where the flag is.</p>
+    </div>
+
+    <p><a class="btn" href="{{ url_for('challenge', cid=chal.id) }}">Back to the phase</a></p>
+  {% endif %}
+</article>
+{% endblock %}

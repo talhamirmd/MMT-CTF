@@ -1,0 +1,30 @@
+{% extends "chal/base.html" %}
+{% block head %}
+<style>
+  body { font-family: "Segoe UI", system-ui, sans-serif; background: #f5f7fb; color: #1d2433; }
+  .nv-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; background: #fff; border-bottom: 1px solid #e3e8f2; }
+  .nv-logo { font-weight: 800; font-size: 1.3rem; color: #3a5bff; letter-spacing: -.02em; }
+  .nv-logo span { color: #1d2433; }
+  .nv-head nav a { margin-left: 24px; color: #4a5468; text-decoration: none; font-size: .95rem; }
+  .nv-main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+  .nv-panel { max-width: 440px; margin: 40px auto; background: #fff; border: 1px solid #e3e8f2; border-radius: 12px; padding: 32px; box-shadow: 0 8px 30px rgba(29, 36, 51, .06); }
+  .nv-panel h1 { font-size: 1.5rem; font-weight: 700; }
+  .nv-btn { display: inline-block; background: #3a5bff; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .nv-foot { text-align: center; color: #8a93a6; font-size: .85rem; padding: 24px; border-top: 1px solid #e3e8f2; background: #fff; }
+  .nv-badge { display: inline-block; font-size: .8rem; font-weight: 600; padding: 2px 10px; border-radius: 99px; background: #eef1ff; color: #3a5bff; }
+</style>
+{% block nova_head %}{% endblock %}
+{% endblock %}
+{% block body %}
+<header class="nv-head">
+  <div class="nv-logo">Nova<span>Tech</span></div>
+  <nav><a href="/chal/m/nova">Home</a><a href="/chal/m/nova">Products</a><a href="/chal/m/nova">Careers</a></nav>
+</header>
+<main class="nv-main">
+  {% block nova_content %}{% endblock %}
+</main>
+<footer class="nv-foot">
+  &copy; 2026 NovaTech Industries. All rights reserved.
+  {% block nova_footer %}{% endblock %}
+</footer>
+{% endblock %}

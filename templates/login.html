@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in - {{ ctf_name }}{% endblock %}
+{% block content %}
+<div class="auth card">
+  <h1>Log in</h1>
+  <p class="muted">Pick up where you left off.</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username
+      <input name="username" required autocomplete="username" value="{{ username }}" autofocus>
+    </label>
+    <label>Password
+      <input type="password" name="password" required autocomplete="current-password">
+    </label>
+    <button class="btn btn-block">Log in</button>
+  </form>
+  <p class="small muted auth-switch">No account yet? <a href="{{ url_for('register', next=request.args.get('next')) }}">Sign up</a></p>
+</div>
+{% endblock %}

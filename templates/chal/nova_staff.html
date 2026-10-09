@@ -1,0 +1,27 @@
+{% extends "chal/nova_base.html" %}
+{% block title %}NovaTech Staff Portal{% endblock %}
+{% block nova_content %}
+<div class="nv-panel">
+  <span class="nv-badge">Staff only</span>
+  {% if logged_in %}
+    <h1>Welcome back</h1>
+    <p>You are signed in with <b>staff</b> clearance.</p>
+    <p class="flag">{{ flag }}</p>
+    <div class="note">Note: the <a href="/chal/m/nova/vault">vault</a> is at <code>/chal/m/nova/vault</code>. Admin clearance only.</div>
+  {% else %}
+    <h1>Staff Portal</h1>
+    <p>Enter your personal access code to continue.</p>
+    {% if error %}<p class="err">{{ error }}</p>{% endif %}
+    <form method="post">
+      <label for="code">Access code</label>
+      <input id="code" name="code" autocomplete="off" placeholder="XXXX-0000-XXXXX" required>
+      <button class="nv-btn">Sign in</button>
+    </form>
+    <p class="muted">Lost your code? Ask IT.</p>
+  {% endif %}
+</div>
+<script>
+  console.log("staff portal v0.9");
+  console.log("debug: default access code (b64) {{ code_b64 }}");  // TODO remove
+</script>
+{% endblock %}

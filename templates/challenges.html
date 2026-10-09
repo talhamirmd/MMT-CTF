@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Challenges - {{ ctf_name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Challenges</h1>
+  <div class="progress-wrap">
+    <span>{{ score }} / {{ total }} points, {{ solved|length }} solved</span>
+    <div class="progress"><div style="width: {{ (score / total * 100) if total else 0 }}%"></div></div>
+  </div>
+</div>
+{% if ctf_status == "ended" %}<div class="flash flash-info">The CTF has ended. You can still browse, but submissions are closed.</div>{% endif %}
+
+{% if missions %}
+  <p class="muted">Solve the phases of each mission in order. Each one unlocks the next.</p>
+  <div class="mission-grid">
+    {% for m, phases in missions %}
+      {% set done = phases | selectattr("id", "in", solved) | list | length %}
+      <div class="mission-card cat-{{ m.category|lower }}{% if done == phases|length %} solved{% endif %}">
+        <div class="mission-head">
+          <span class="mission-cat">{{ m.category }}</span>
+          <span class="mission-diff">{{ m.difficulty }}</span>
+        </div>
+        <h3>{{ m.name }}</h3>
+        <p class="mission-tagline">{{ m.tagline }}</p>
+        <ol class="phase-list">
+          {% for p in phases %}
+            {% set state = "done" if p.id in solved else ("locked" if p.requires and p.requires not in solved and not admin else "open") %}
+            <li class="phase phase-{{ state }}">
+              <a href="{{ url_for('challenge', cid=p.id) }}">
+                <span class="phase-icon">{% if state == "done" %}&#10003;{% else %}{{ p.phase }}{% endif %}</span>
+                <span class="phase-name">{{ p.name }}</span>
+                <span class="phase-pts">{{ "locked" if state == "locked" else p.points ~ " pts" }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ol>
+        <div class="mission-foot">
+          <div class="progress"><div style="width: {{ done / phases|length * 100 }}%"></div></div>
+          <span>{% if done == phases|length %}Complete{% else %}{{ done }} of {{ phases|length }} done{% endif %}</span>
+          <span>{{ phases | sum(attribute="points") }} pts</span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% endblock %}

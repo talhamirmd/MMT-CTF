@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Admin - {{ ctf_name }}{% endblock %}
+{% block content %}
+<h1>Admin panel</h1>
+<section class="stats">
+  <div class="stat"><span>{{ players }}</span>players</div>
+  <div class="stat"><span>{{ total_submissions }}</span>submissions</div>
+  <div class="stat"><span>{{ correct_submissions }}</span>correct</div>
+</section>
+
+<div class="card">
+  <h2>Challenges</h2>
+  <table class="table">
+    <thead><tr><th>Name</th><th>Category</th><th>Difficulty</th><th class="num">Points</th><th class="num">Solves</th><th>Flag</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for c in challenges %}
+      <tr>
+        <td><a href="{{ url_for('challenge', cid=c.id) }}">{{ c.name }}</a></td>
+        <td>{{ c.category }}</td>
+        <td>{{ c.difficulty }}</td>
+        <td class="num">{{ c.points }}</td>
+        <td class="num">{{ counts.get(c.id, 0) }}</td>
+        <td><details><summary class="muted">show</summary><code>{{ c.flag }}</code></details></td>
+        <td>
+          <form method="post" action="{{ url_for('admin_toggle_challenge', cid=c.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-small {% if c.id in hidden %}btn-warn{% else %}btn-ghost{% endif %}">{{ 'Hidden' if c.id in hidden else 'Visible' }}</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Last 100 submissions</h2>
+  <table class="table">
+    <thead><tr><th>Time</th><th>Player</th><th>Challenge</th><th>Submitted</th><th>Result</th></tr></thead>
+    <tbody>
+    {% for s in submissions %}
+      <tr>
+        <td class="muted">{{ s.created_at | dt }}</td>
+        <td>{{ s.username or '-' }}</td>
+        <td>{{ chal_names.get(s.challenge_id, s.challenge_id) }}</td>
+        <td><code>{{ s.submitted }}</code></td>
+        <td>{% if s.correct %}<span class="ok">correct</span>{% else %}<span class="bad">wrong</span>{% endif %}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="muted">No submissions yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

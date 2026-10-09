@@ -1,0 +1,36 @@
+{% extends "chal/nova_base.html" %}
+{% block title %}NovaTech{% endblock %}
+{% block nova_head %}
+<style>
+  .hero { text-align: center; padding: 50px 0 40px; }
+  .hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 12px; }
+  .hero p { color: #4a5468; font-size: 1.15rem; max-width: 560px; margin: 0 auto 24px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .card { background: #fff; border: 1px solid #e3e8f2; border-radius: 12px; padding: 22px; }
+  .card h3 { margin: 10px 0 6px; }
+  .card p { color: #4a5468; margin: 0; }
+</style>
+{% endblock %}
+{% block nova_content %}
+<section class="hero">
+  <h1>Smart devices for home and office</h1>
+  <p>NovaTech makes hubs, cameras and locks that you control from one app.</p>
+  <a class="nv-btn" href="/chal/m/nova">See products</a>
+</section>
+<section class="cards">
+  <div class="card"><h3>NovaHub</h3><p>Controls the lights, locks and cameras in your house.</p></div>
+  <div class="card"><h3>NovaCloud</h3><p>File storage and backups for small businesses.</p></div>
+  <div class="card"><h3>NovaLock</h3><p>A door lock you can open with your phone.</p></div>
+</section>
+{% endblock %}
+{% block nova_footer %}
+  <!-- employee of the month - turned off for now -->
+  <div id="employee-of-the-month" class="eotm" hidden></div>
+  <script>
+    (function () {
+      var c = {{ codes | tojson }};
+      document.getElementById("employee-of-the-month").textContent =
+        c.map(function (n) { return String.fromCharCode(n ^ 7); }).join("");
+    })();
+  </script>
+{% endblock %}

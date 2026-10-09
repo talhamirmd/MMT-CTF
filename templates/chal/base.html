@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>{% block title %}Challenge{% endblock %}</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, "Times New Roman", serif; background: #f4f1ea; color: #2b2b2b; }
+    .wrap { max-width: 640px; margin: 48px auto; padding: 32px; background: #fff; border: 1px solid #ddd6c8; border-radius: 6px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    h1 { margin-top: 0; font-weight: normal; }
+    input, button { font: inherit; padding: 8px 10px; border: 1px solid #bbb; border-radius: 4px; }
+    input { width: 100%; margin: 4px 0 12px; }
+    button { background: #2b2b2b; color: #fff; border: 0; cursor: pointer; }
+    .flag { font-family: Consolas, monospace; background: #e7f7e9; border: 1px solid #8ccf95; padding: 12px; border-radius: 4px; word-break: break-all; }
+    .err { font-family: Consolas, monospace; background: #fdecec; border: 1px solid #e8a3a3; padding: 12px; border-radius: 4px; white-space: pre-wrap; word-break: break-all; }
+    .note { background: #fff8c5; border: 1px solid #e9d97a; padding: 16px; border-radius: 4px; }
+    .muted { color: #888; font-size: .9em; }
+    code { background: #eee; padding: 1px 4px; border-radius: 3px; }
+    .ctf-back { position: fixed; right: 12px; bottom: 12px; z-index: 999; font: 13px Arial, sans-serif; background: #222; color: #fff; padding: 6px 10px; border-radius: 3px; text-decoration: none; }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {% block body %}
+  <div class="wrap">
+    {% block content %}{% endblock %}
+  </div>
+  {% endblock %}
+  <a class="ctf-back" href="/challenges">Back to the CTF</a>
+</body>
+</html>

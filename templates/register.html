@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Sign up - {{ ctf_name }}{% endblock %}
+{% block content %}
+<div class="auth card">
+  <h1>Sign up</h1>
+  <p class="muted">Your username shows on the scoreboard. Your progress is saved to your account.</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username
+      <input name="username" required autocomplete="username" value="{{ username }}" minlength="3" maxlength="24"
+             pattern="[A-Za-z0-9_.\-]+" title="Letters, numbers, _ . and -" autofocus>
+    </label>
+    <label>Password <span class="small">(at least 8 characters)</span>
+      <input type="password" name="password" required minlength="8" autocomplete="new-password">
+    </label>
+    <label>Password again
+      <input type="password" name="confirm" required minlength="8" autocomplete="new-password">
+    </label>
+    <button class="btn btn-block">Create account</button>
+  </form>
+  <p class="small muted auth-switch">Already have an account? <a href="{{ url_for('login', next=request.args.get('next')) }}">Log in</a></p>
+</div>
+{% endblock %}

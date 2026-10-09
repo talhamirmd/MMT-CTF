@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Admin login - {{ ctf_name }}{% endblock %}
+{% block content %}
+<div class="auth card">
+  <h1>Admin login</h1>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username
+      <input name="username" required autocomplete="username" value="{{ request.form.username }}">
+    </label>
+    <label>Password
+      <input type="password" name="password" required autocomplete="current-password">
+    </label>
+    <button class="btn btn-block">Log in</button>
+  </form>
+  <p class="muted small">For organisers. Not part of the CTF.</p>
+</div>
+{% endblock %}

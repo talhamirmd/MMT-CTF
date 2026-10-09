@@ -1,0 +1,17 @@
+{% extends "chal/nova_base.html" %}
+{% block title %}NovaTech Vault{% endblock %}
+{% block nova_content %}
+<div class="nv-panel">
+  <span class="nv-badge">Restricted</span>
+  <h1>Vault</h1>
+  <p>Your clearance: <b>{{ clearance or "none" }}</b></p>
+  {% if flag %}
+    <p>Access granted.</p>
+    <p class="flag">{{ flag }}</p>
+  {% elif clearance %}
+    <p class="err">Access denied. "{{ clearance }}" is not enough, you need admin.</p>
+  {% else %}
+    <p class="err">Access denied. Log in through the staff portal first.</p>
+  {% endif %}
+</div>
+{% endblock %}

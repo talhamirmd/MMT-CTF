@@ -1,0 +1,14 @@
+{
+  "nova-1": "flag{change_me_nova_one}",
+  "nova-2": "flag{change_me_nova_two}",
+  "nova-3": "flag{change_me_nova_three}",
+  "darkroom-1": "flag{change_me_darkroom_one}",
+  "darkroom-2": "flag{change_me_darkroom_two}",
+  "darkroom-3": "flag{change_me_darkroom_three}",
+  "snake-1": "flag{change_me_snake_one}",
+  "snake-2": "flag{change_me_snake_two}",
+  "snake-3": "flag{change_me_snake_three}",
+  "ghost-1": "flag{change_me_ghost_one}",
+  "ghost-2": "flag{change_me_ghost_two}",
+  "ghost-3": "flag{change_me_ghost_three}"
+}

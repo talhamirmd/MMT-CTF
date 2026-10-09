@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Scoreboard - {{ ctf_name }}{% endblock %}
+{% block content %}
+<h1>Scoreboard</h1>
+<p class="muted">Ranked by points. If two players have the same score, whoever got there first is higher.</p>
+
+<div class="card">
+  {% if board %}
+    <table class="table scoreboard">
+      <thead><tr><th class="rank">#</th><th>Player</th><th class="num">Solved</th><th class="num">Points</th><th class="hide-sm">Last solve</th></tr></thead>
+      <tbody>
+      {% for p in board %}
+        <tr class="{{ 'me' if user and user.id == p.id }}{{ ' top-' ~ loop.index if loop.index <= 3 }}">
+          <td class="rank">{{ loop.index }}</td>
+          <td>{{ p.username }}{% if user and user.id == p.id %} <span class="you">you</span>{% endif %}</td>
+          <td class="num">{{ p.solves }}</td>
+          <td class="num"><b>{{ p.score }}</b> <span class="muted small">/ {{ total }}</span></td>
+          <td class="muted hide-sm">{{ p.last | dt }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">Nobody has solved anything yet. Be the first!</p>
+  {% endif %}
+</div>
+{% if not user %}
+  <p><a href="{{ url_for('register') }}">Sign up</a> to get on the board.</p>
+{% endif %}
+{% endblock %}

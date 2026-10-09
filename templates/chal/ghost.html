@@ -1,0 +1,32 @@
+{% extends "chal/base.html" %}
+{% block title %}GHOST intercept #{{ n }}{% endblock %}
+{% block head %}
+<style>
+  body { background: #161616; color: #ddd; font-family: Consolas, "Courier New", monospace; }
+  .radio { max-width: 780px; margin: 40px auto; padding: 0 20px; }
+  .radio h1 { font-family: inherit; color: #fff; }
+  .meta { color: #999; font-size: .9rem; line-height: 1.7; }
+  .msg { border: 1px solid #333; background: #1e1e1e; padding: 18px; border-radius: 6px; font-size: 1.05rem; line-height: 1.7; word-break: break-all; white-space: pre-wrap; }
+  .tabs { display: flex; gap: 10px; margin-top: 26px; }
+  .tabs a { color: #aaa; text-decoration: none; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; }
+  .tabs a.on { color: #161616; background: #ddd; }
+</style>
+{% endblock %}
+{% block body %}
+<div class="radio">
+  <h1>GHOST</h1>
+  <div class="meta">
+    INTERCEPT #{{ n }} OF {{ total }}<br>
+    FREQ 1337.{{ n }} kHz<br>
+    {% if n == 1 %}note: looks like a simple shift
+    {% elif n == 2 %}note: shift changes every letter, probably a keyword
+    {% else %}note: hex{% endif %}
+  </div>
+  <div class="msg">{{ text }}</div>
+  <div class="tabs">
+    {% for i in range(1, total + 1) %}
+      <a href="/chal/m/ghost/{{ i }}" class="{{ 'on' if i == n }}">Transmission {{ i }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

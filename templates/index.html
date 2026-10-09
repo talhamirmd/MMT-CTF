@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>{{ ctf_name }}</h1>
+  <p class="lead">A small CTF with four missions. Each mission has three parts, and the answer to one part gets you into the next. Make an account and your progress is saved, so you can stop and come back any time.</p>
+
+  {% if ctf_status == "upcoming" %}
+    <p class="status">Starts {{ ctf_start | dt }}</p>
+  {% elif ctf_status == "ended" %}
+    <p class="status status-ended">The CTF is over. Thanks for playing.</p>
+  {% elif ctf_end %}
+    <p class="status status-running">Running until {{ ctf_end | dt }}</p>
+  {% endif %}
+
+  <div class="hero-actions">
+    {% if user %}
+      <a class="btn" href="{{ url_for('challenges') }}">Continue playing</a>
+    {% else %}
+      <a class="btn" href="{{ url_for('register') }}">Create an account</a>
+      <a class="btn btn-ghost" href="{{ url_for('login') }}">Log in</a>
+    {% endif %}
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><span>{{ stats.missions }}</span>missions</div>
+  <div class="stat"><span>{{ stats.phases }}</span>phases</div>
+  <div class="stat"><span>{{ stats.players }}</span>players</div>
+</section>
+
+<section class="card">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li>Sign up with a username and password.</li>
+    <li>Pick a mission and open phase 1.</li>
+    <li>Find the flag. It looks like <code>flag{some_text}</code>.</li>
+    <li>Submit it to get the points and unlock the next phase.</li>
+    <li>If you get stuck, each phase has 3 hints.</li>
+  </ol>
+  <p>Everything is saved to your account. Log in from any computer to carry on where you left off, and see where you rank on the <a href="{{ url_for('scoreboard') }}">scoreboard</a>.</p>
+  <h3>Tools you'll want</h3>
+  <ul class="tools">
+    <li>Your browser's dev tools (F12)</li>
+    <li><a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener">CyberChef</a> for decoding text and looking inside files</li>
+    <li><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python 3</a></li>
+  </ul>
+</section>
+{% endblock %}

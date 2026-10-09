@@ -1,0 +1,31 @@
+{% extends "chal/base.html" %}
+{% block title %}PhotoLab Recovery{% endblock %}
+{% block head %}
+<style>
+  body { background: #1a1612; color: #e8dccb; font-family: Georgia, serif; }
+  .lab { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .lab h1 { font-weight: normal; letter-spacing: .02em; }
+  .lab h1 small { display: block; font-size: .9rem; color: #b5a48c; font-style: italic; }
+  .frame { background: #f4ecdf; padding: 14px 14px 46px; box-shadow: 0 12px 40px rgba(0,0,0,.6); margin: 30px 0; position: relative; }
+  .frame img { display: block; width: 100%; height: auto; image-rendering: auto; }
+  .frame figcaption { position: absolute; bottom: 12px; left: 16px; color: #5b4d3a; font-style: italic; }
+  .case { border: 1px dashed #6b5a44; padding: 14px 18px; border-radius: 6px; font-family: Consolas, monospace; font-size: .9rem; line-height: 1.7; }
+  .case b { color: #ffcf8a; font-weight: normal; }
+  .dl { display: inline-block; background: #ffcf8a; color: #1a1612; padding: 10px 18px; border-radius: 4px; text-decoration: none; font-family: Consolas, monospace; font-weight: bold; margin-top: 18px; }
+</style>
+{% endblock %}
+{% block body %}
+<div class="lab">
+  <h1>PhotoLab Recovery <small>case 2291</small></h1>
+  <figure class="frame">
+    <img src="/static/files/dark_photo.png" alt="Recovered photo - appears completely black">
+    <figcaption>item 4, from the suspect's SD card</figcaption>
+  </figure>
+  <div class="case">
+    <b>file:</b> dark_photo.png<br>
+    <b>source:</b> SD card seized from suspect's camera<br>
+    <b>notes:</b> opens fine but it's all black. file is bigger than it should be for a black image
+  </div>
+  <a class="dl" href="/static/files/dark_photo.png" download>Download dark_photo.png</a>
+</div>
+{% endblock %}
