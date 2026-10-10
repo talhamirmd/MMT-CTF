@@ -13,6 +13,9 @@ Players sign up with a username and password. Their solves, score and guide time
 
 Each phase has 3 hints and a step by step guide with screenshots (the Guide page). A phase's guide unlocks after the player has spent 15 minutes on it, or once they solve it. The screenshots in `static/guide/` show `flag{...}` instead of real flags; the real flag is only added to the page when the guide unlocks.
 
+
+**LIVE LINK - https://mmt-ctf.onrender.com/**
+
 ## Running it locally
 
 1. Copy `flags.example.json` to `flags.json` and put your own flags in it. Flags can use lowercase letters, numbers, `_ { } : .` and spaces.
